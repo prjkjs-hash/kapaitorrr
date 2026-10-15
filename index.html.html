@@ -1,0 +1,776 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belajar Kapasitor</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f5ff;
+    color: #1b2b45;
+}
+
+header {
+    background: #102747;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    background: #174b85;
+    padding: 12px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+nav button {
+    background: transparent;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+nav button:hover {
+    background: #287bd1;
+}
+
+section {
+    padding: 25px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    margin: 18px 0;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px #00000010;
+}
+
+h2 {
+    color: #145ca8;
+}
+
+h3 {
+    color: #174b85;
+}
+
+button.action {
+    background: #1677f9;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+button.action:hover {
+    background: #0957bd;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px;
+    border: 1px solid #b8cce5;
+    border-radius: 8px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.formula {
+    text-align: center;
+    background: #e6f2ff;
+    padding: 18px;
+    border-radius: 10px;
+    font-size: 24px;
+    color: #104f91;
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+.diagram {
+    text-align: center;
+    padding: 25px 5px;
+    background: #f7fbff;
+    border-radius: 12px;
+}
+
+.plate {
+    display: inline-block;
+    width: 35px;
+    height: 125px;
+    background: #1976d2;
+    vertical-align: middle;
+    border-radius: 4px;
+}
+
+.dielectric {
+    display: inline-block;
+    width: 75px;
+    height: 125px;
+    background: #ffe4a3;
+    vertical-align: middle;
+    border: 2px dashed #d69b20;
+}
+
+.result {
+    background: #e0fff2;
+    color: #086747;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.question {
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.question label {
+    display: block;
+    font-weight: normal;
+    margin: 10px 0;
+}
+
+.question input {
+    width: auto;
+    margin-right: 8px;
+}
+
+#app {
+    display: none;
+}
+
+#landing {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #09182d, #145ca8);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+}
+
+.hero {
+    max-width: 750px;
+}
+
+.hero h1 {
+    color: white;
+    font-size: clamp(36px, 7vw, 65px);
+}
+
+.hero p {
+    color: #d8eaff;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.hero .action {
+    font-size: 16px;
+    margin: 8px;
+}
+
+footer {
+    background: #102747;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.small {
+    color: #62748b;
+    font-size: 14px;
+}
+
+@media(max-width:600px) {
+    section {
+        padding: 15px;
+    }
+
+    nav button {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HALAMAN PEMBUKA -->
+<div id="landing">
+    <div class="hero">
+        <div style="font-size:70px;">⚡</div>
+        <h1>Belajar Kapasitor</h1>
+        <h2 style="color:#8dccff;">Memahami Kapasitansi dengan Mudah</h2>
+        <p>
+            Selamat datang di media pembelajaran fisika!
+            Pelajari pengertian kapasitor, rumus, contoh soal,
+            struktur dasar, kalkulator, dan kuis interaktif.
+        </p>
+        <button class="action" onclick="mulai()">MULAI BELAJAR →</button>
+        <p class="small" style="color:#d8eaff;">
+            Dikembangkan oleh Gamaria Wulandari Djurumudi
+        </p>
+    </div>
+</div>
+
+<!-- APLIKASI UTAMA -->
+<div id="app">
+
+<header>
+    <h1>⚡ Belajar Kapasitor</h1>
+    <p>Media Pembelajaran Fisika</p>
+</header>
+
+<nav>
+    <button onclick="buka('beranda')">Beranda</button>
+    <button onclick="buka('materi')">Materi</button>
+    <button onclick="buka('rumus')">Rumus</button>
+    <button onclick="buka('contoh')">Contoh Soal</button>
+    <button onclick="buka('struktur')">Struktur</button>
+    <button onclick="buka('kalkulator')">Kalkulator</button>
+    <button onclick="buka('kuis')">Kuis</button>
+    <button onclick="kembali()">Halaman Awal</button>
+</nav>
+
+<!-- BERANDA -->
+<section id="beranda" class="halaman">
+    <div class="card">
+        <h2>Selamat Datang!</h2>
+        <p>
+            Website ini membantu kamu memahami kapasitor dan
+            kapasitansi secara sederhana dan interaktif.
+        </p>
+        <h3>Apa yang akan dipelajari?</h3>
+        <ul>
+            <li>Pengertian dan fungsi kapasitor.</li>
+            <li>Jenis-jenis kapasitor.</li>
+            <li>Rumus dan satuan kapasitansi.</li>
+            <li>Contoh soal dan pembahasan.</li>
+            <li>Struktur dasar kapasitor.</li>
+            <li>Kalkulator kapasitansi.</li>
+            <li>Kuis dengan nilai otomatis.</li>
+        </ul>
+        <button class="action" onclick="buka('materi')">
+            Mulai dari Materi
+        </button>
+    </div>
+
+    <div class="card">
+        <h2>Pengertian Singkat</h2>
+        <p>
+            Kapasitor adalah komponen elektronika yang dapat
+            menyimpan muatan listrik dan energi dalam medan listrik.
+            Kemampuan menyimpan muatan tersebut disebut kapasitansi.
+        </p>
+        <div class="formula">C = Q / V</div>
+    </div>
+</section>
+
+<!-- MATERI -->
+<section id="materi" class="halaman" style="display:none">
+    <h2>Materi Kapasitor</h2>
+
+    <div class="card">
+        <h3>1. Pengertian Kapasitor</h3>
+        <p>
+            Kapasitor adalah komponen listrik yang tersusun dari
+            dua konduktor yang dipisahkan oleh bahan isolator
+            yang disebut dielektrik.
+        </p>
+        <p>
+            Ketika diberi tegangan, muatan listrik dapat terkumpul
+            pada kedua konduktor tersebut.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>2. Pengertian Kapasitansi</h3>
+        <p>
+            Kapasitansi merupakan ukuran kemampuan kapasitor
+            untuk menyimpan muatan listrik pada beda potensial tertentu.
+        </p>
+        <p>Simbol kapasitansi adalah C dan satuannya farad (F).</p>
+        <div class="formula">C = Q / V</div>
+    </div>
+
+    <div class="card">
+        <h3>3. Fungsi Kapasitor</h3>
+        <ul>
+            <li>Menyimpan energi listrik sementara.</li>
+            <li>Membantu meratakan tegangan pada catu daya.</li>
+            <li>Digunakan dalam rangkaian filter.</li>
+            <li>Digunakan pada rangkaian pengatur waktu.</li>
+            <li>Mendukung pengolahan sinyal elektronik.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>4. Jenis-Jenis Kapasitor</h3>
+        <h4>Kapasitor Keramik</h4>
+        <p>Berukuran relatif kecil dan banyak digunakan dalam rangkaian elektronik.</p>
+
+        <h4>Kapasitor Elektrolit</h4>
+        <p>Umumnya memiliki nilai kapasitansi relatif besar dan mempunyai polaritas.</p>
+
+        <h4>Kapasitor Film</h4>
+        <p>Menggunakan bahan film sebagai dielektrik.</p>
+
+        <h4>Kapasitor Tantalum</h4>
+        <p>Jenis kapasitor elektrolit yang ringkas dan harus dipasang sesuai polaritasnya.</p>
+    </div>
+
+    <div class="card">
+        <h3>5. Satuan Kapasitansi</h3>
+        <p>Satuan SI kapasitansi adalah farad (F).</p>
+        <ul>
+            <li>1 mF = 10⁻³ F</li>
+            <li>1 μF = 10⁻⁶ F</li>
+            <li>1 nF = 10⁻⁹ F</li>
+            <li>1 pF = 10⁻¹² F</li>
+        </ul>
+    </div>
+</section>
+
+<!-- RUMUS -->
+<section id="rumus" class="halaman" style="display:none">
+    <h2>Rumus Kapasitansi</h2>
+
+    <div class="card">
+        <h3>1. Rumus Dasar</h3>
+        <div class="formula">C = Q / V</div>
+        <p>C = kapasitansi (F)</p>
+        <p>Q = muatan listrik (Coulomb)</p>
+        <p>V = tegangan listrik (Volt)</p>
+        <div class="formula">Q = C × V</div>
+        <div class="formula">V = Q / C</div>
+    </div>
+
+    <div class="card">
+        <h3>2. Kapasitor Keping Sejajar</h3>
+        <div class="formula">C = ε₀ εᵣ A / d</div>
+        <p>
+            ε₀ = permitivitas vakum, sekitar 8,854 × 10⁻¹² F/m.
+        </p>
+        <p>εᵣ = permitivitas relatif bahan dielektrik.</p>
+        <p>A = luas keping (m²).</p>
+        <p>d = jarak antarkeping (m).</p>
+    </div>
+
+    <div class="card">
+        <h3>3. Rangkaian Paralel</h3>
+        <div class="formula">Ctotal = C₁ + C₂ + C₃ + ...</div>
+        <p>
+            Pada rangkaian paralel, kapasitansi total merupakan
+            jumlah seluruh kapasitansi.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>4. Rangkaian Seri</h3>
+        <div class="formula">1/Ctotal = 1/C₁ + 1/C₂</div>
+        <p>Untuk dua kapasitor:</p>
+        <div class="formula">Ctotal = (C₁ × C₂) / (C₁ + C₂)</div>
+    </div>
+</section>
+
+<!-- CONTOH SOAL -->
+<section id="contoh" class="halaman" style="display:none">
+    <h2>Contoh Soal dan Pembahasan</h2>
+
+    <div class="card">
+        <h3>Contoh 1: Menghitung Kapasitansi</h3>
+        <p>
+            Sebuah kapasitor menyimpan muatan 20 μC
+            pada tegangan 10 V. Berapakah kapasitansinya?
+        </p>
+        <p><b>Diketahui:</b> Q = 20 μC dan V = 10 V.</p>
+        <p><b>Rumus:</b> C = Q / V</p>
+        <div class="formula">
+            C = (20 × 10⁻⁶) / 10
+        </div>
+        <p><b>Jawaban: C = 2 μF.</b></p>
+    </div>
+
+    <div class="card">
+        <h3>Contoh 2: Menghitung Muatan</h3>
+        <p>
+            Kapasitor 4 μF dihubungkan pada tegangan 12 V.
+            Hitung muatan listriknya!
+        </p>
+        <div class="formula">
+            Q = C × V = 4 μF × 12 V
+        </div>
+        <p><b>Jawaban: Q = 48 μC.</b></p>
+    </div>
+
+    <div class="card">
+        <h3>Contoh 3: Rangkaian Paralel</h3>
+        <p>
+            Tiga kapasitor 2 μF, 3 μF, dan 5 μF
+            disusun paralel.
+        </p>
+        <div class="formula">Ctotal = 2 + 3 + 5</div>
+        <p><b>Jawaban: Ctotal = 10 μF.</b></p>
+    </div>
+
+    <div class="card">
+        <h3>Contoh 4: Rangkaian Seri</h3>
+        <p>
+            Kapasitor 6 μF dan 3 μF disusun secara seri.
+        </p>
+        <div class="formula">Ctotal = (6 × 3) / (6 + 3)</div>
+        <p><b>Jawaban: Ctotal = 2 μF.</b></p>
+    </div>
+</section>
+
+<!-- STRUKTUR -->
+<section id="struktur" class="halaman" style="display:none">
+    <h2>Struktur Dasar Kapasitor</h2>
+
+    <div class="card">
+        <p>
+            Kapasitor keping sejajar terdiri dari dua keping
+            konduktor dan bahan dielektrik di antaranya.
+        </p>
+
+        <div class="diagram">
+            <p><b>Keping Positif (+)</b></p>
+            <span class="plate"></span>
+            <span class="dielectric"></span>
+            <span class="plate"></span>
+            <p><b>Keping Negatif (−)</b></p>
+            <p>Konduktor — Dielektrik — Konduktor</p>
+        </div>
+
+        <h3>Bagian-Bagian Kapasitor</h3>
+        <p><b>1. Keping konduktor:</b> tempat muatan listrik terkumpul.</p>
+        <p><b>2. Dielektrik:</b> bahan isolator yang memisahkan kedua keping.</p>
+        <p><b>3. Jarak antarkeping:</b> jarak yang memengaruhi kapasitansi.</p>
+    </div>
+
+    <div class="card">
+        <h3>Simbol Kapasitor dalam Rangkaian</h3>
+        <div class="formula" style="font-size:36px">───| |───</div>
+        <p>
+            Dua garis sejajar adalah simbol umum kapasitor nonpolar
+            dalam diagram rangkaian listrik.
+        </p>
+    </div>
+</section>
+
+<!-- KALKULATOR -->
+<section id="kalkulator" class="halaman" style="display:none">
+    <h2>Kalkulator Kapasitor</h2>
+
+    <div class="card">
+        <label for="jenis">Pilih Perhitungan:</label>
+        <select id="jenis" onchange="ubahKalkulator()">
+            <option value="c">Kapasitansi (C = Q/V)</option>
+            <option value="q">Muatan (Q = C×V)</option>
+            <option value="v">Tegangan (V = Q/C)</option>
+            <option value="p">Kapasitor Paralel</option>
+            <option value="s">Kapasitor Seri (2 kapasitor)</option>
+        </select>
+
+        <div id="inputKalkulator"></div>
+
+        <button class="action" onclick="hitung()">Hitung</button>
+        <div id="hasil" class="result" style="display:none"></div>
+
+        <p class="small">
+            Masukkan kapasitansi dalam farad, muatan dalam coulomb,
+            dan tegangan dalam volt. Gunakan notasi ilmiah, misalnya
+            0.000002 untuk 2 μF.
+        </p>
+    </div>
+</section>
+
+<!-- KUIS -->
+<section id="kuis" class="halaman" style="display:none">
+    <h2>Kuis Kapasitor</h2>
+    <p>Jawab lima soal berikut untuk menguji pemahamanmu.</p>
+
+    <div class="card">
+        <form id="formKuis">
+
+            <div class="question">
+                <p>1. Apa satuan SI kapasitansi?</p>
+                <label><input type="radio" name="q1" value="a"> Ampere</label>
+                <label><input type="radio" name="q1" value="b"> Farad</label>
+                <label><input type="radio" name="q1" value="c"> Ohm</label>
+            </div>
+
+            <div class="question">
+                <p>2. Rumus kapasitansi yang benar adalah ...</p>
+                <label><input type="radio" name="q2" value="a"> C = Q / V</label>
+                <label><input type="radio" name="q2" value="b"> C = Q × V</label>
+                <label><input type="radio" name="q2" value="c"> C = V / Q</label>
+            </div>
+
+            <div class="question">
+                <p>3. Q = 12 μC dan V = 6 V. Nilai C adalah ...</p>
+                <label><input type="radio" name="q3" value="a"> 72 μF</label>
+                <label><input type="radio" name="q3" value="b"> 0,5 μF</label>
+                <label><input type="radio" name="q3" value="c"> 2 μF</label>
+            </div>
+
+            <div class="question">
+                <p>4. Kapasitansi total paralel dihitung dengan ...</p>
+                <label><input type="radio" name="q4" value="a"> Menjumlahkan semua kapasitor</label>
+                <label><input type="radio" name="q4" value="b"> Mengurangkan semua kapasitor</label>
+                <label><input type="radio" name="q4" value="c"> Membagi dengan tegangan</label>
+            </div>
+
+            <div class="question">
+                <p>5. Bahan isolator di antara keping disebut ...</p>
+                <label><input type="radio" name="q5" value="a"> Resistor</label>
+                <label><input type="radio" name="q5" value="b"> Dielektrik</label>
+                <label><input type="radio" name="q5" value="c"> Konduktor</label>
+            </div>
+
+            <button type="button" class="action" onclick="nilaiKuis()">
+                Periksa Jawaban
+            </button>
+
+            <button type="reset" class="action" onclick="resetKuis()">
+                Ulangi Kuis
+            </button>
+        </form>
+
+        <div id="hasilKuis" class="result" style="display:none"></div>
+    </div>
+</section>
+
+<footer>
+    <p>Website Pembelajaran Fisika: Kapasitor dan Kapasitansi</p>
+    <p>Dikembangkan oleh <b>Gamaria Wulandari Djurumudi</b></p>
+</footer>
+
+</div>
+
+<script>
+// NAVIGASI
+function mulai() {
+    document.getElementById("landing").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    buka("beranda");
+}
+
+function kembali() {
+    document.getElementById("app").style.display = "none";
+    document.getElementById("landing").style.display = "flex";
+    window.scrollTo(0, 0);
+}
+
+function buka(id) {
+    document.querySelectorAll(".halaman").forEach(function(halaman) {
+        halaman.style.display = "none";
+    });
+
+    document.getElementById(id).style.display = "block";
+
+    if (id === "kalkulator") {
+        ubahKalkulator();
+    }
+
+    window.scrollTo(0, 0);
+}
+
+// KALKULATOR
+function ubahKalkulator() {
+    const jenis = document.getElementById("jenis").value;
+    const area = document.getElementById("inputKalkulator");
+
+    let html = "";
+
+    if (jenis === "c") {
+        html = `
+            <label>Muatan Q (coulomb)</label>
+            <input id="nilaiQ" type="number" step="any" min="0" placeholder="Contoh: 0.00002">
+            <label>Tegangan V (volt)</label>
+            <input id="nilaiV" type="number" step="any" min="0" placeholder="Contoh: 10">
+        `;
+    } else if (jenis === "q") {
+        html = `
+            <label>Kapasitansi C (farad)</label>
+            <input id="nilaiC" type="number" step="any" min="0" placeholder="Contoh: 0.000004">
+            <label>Tegangan V (volt)</label>
+            <input id="nilaiV" type="number" step="any" min="0" placeholder="Contoh: 12">
+        `;
+    } else if (jenis === "v") {
+        html = `
+            <label>Muatan Q (coulomb)</label>
+            <input id="nilaiQ" type="number" step="any" min="0" placeholder="Contoh: 0.000048">
+            <label>Kapasitansi C (farad)</label>
+            <input id="nilaiC" type="number" step="any" min="0" placeholder="Contoh: 0.000004">
+        `;
+    } else {
+        html = `
+            <label>Kapasitansi pertama C1 (farad)</label>
+            <input id="nilaiC1" type="number" step="any" min="0" placeholder="Contoh: 0.000006">
+            <label>Kapasitansi kedua C2 (farad)</label>
+            <input id="nilaiC2" type="number" step="any" min="0" placeholder="Contoh: 0.000003">
+        `;
+    }
+
+    area.innerHTML = html;
+    document.getElementById("hasil").style.display = "none";
+}
+
+function angka(id) {
+    const elemen = document.getElementById(id);
+
+    if (!elemen || elemen.value.trim() === "") {
+        throw new Error("Silakan isi semua nilai terlebih dahulu.");
+    }
+
+    const nilai = Number(elemen.value);
+
+    if (!Number.isFinite(nilai) || nilai <= 0) {
+        throw new Error("Masukkan angka yang lebih besar dari nol.");
+    }
+
+    return nilai;
+}
+
+function hitung() {
+    const jenis = document.getElementById("jenis").value;
+    const hasil = document.getElementById("hasil");
+
+    try {
+        let nilai, satuan, rumus;
+
+        if (jenis === "c") {
+            nilai = angka("nilaiQ") / angka("nilaiV");
+            satuan = "F";
+            rumus = "C = Q / V";
+        } else if (jenis === "q") {
+            nilai = angka("nilaiC") * angka("nilaiV");
+            satuan = "Coulomb";
+            rumus = "Q = C × V";
+        } else if (jenis === "v") {
+            nilai = angka("nilaiQ") / angka("nilaiC");
+            satuan = "Volt";
+            rumus = "V = Q / C";
+        } else if (jenis === "p") {
+            nilai = angka("nilaiC1") + angka("nilaiC2");
+            satuan = "F";
+            rumus = "Ctotal = C1 + C2";
+        } else {
+            const c1 = angka("nilaiC1");
+            const c2 = angka("nilaiC2");
+
+            nilai = (c1 * c2) / (c1 + c2);
+            satuan = "F";
+            rumus = "Ctotal = (C1 × C2) / (C1 + C2)";
+        }
+
+        hasil.innerHTML =
+            "Rumus: " + rumus +
+            "<br>Hasil: " + nilai.toExponential(4) +
+            " " + satuan;
+
+    } catch (error) {
+        hasil.textContent = error.message;
+    }
+
+    hasil.style.display = "block";
+}
+
+// KUIS
+function nilaiKuis() {
+    const kunci = {
+        q1: "b",
+        q2: "a",
+        q3: "c",
+        q4: "a",
+        q5: "b"
+    };
+
+    let skor = 0;
+    let terjawab = 0;
+
+    for (const soal in kunci) {
+        const jawaban = document.querySelector(
+            'input[name="' + soal + '"]:checked'
+        );
+
+        if (jawaban) {
+            terjawab++;
+
+            if (jawaban.value === kunci[soal]) {
+                skor++;
+            }
+        }
+    }
+
+    const persen = skor * 20;
+    const hasil = document.getElementById("hasilKuis");
+
+    hasil.innerHTML = `
+        <h3>Hasil Kuis</h3>
+        <p>Jawaban terisi: ${terjawab} dari 5 soal.</p>
+        <p>Skor kamu: ${skor}/5 (${persen}%)</p>
+        <p>${
+            skor === 5
+                ? "Hebat! Semua jawaban benar!"
+                : skor >= 3
+                ? "Bagus! Terus tingkatkan pemahamanmu."
+                : "Tetap semangat! Pelajari materi dan coba lagi."
+        }</p>
+        <p><b>Kunci jawaban:</b></p>
+        <p>1. Farad | 2. C = Q/V | 3. 2 μF</p>
+        <p>4. Menjumlahkan semua kapasitor | 5. Dielektrik</p>
+    `;
+
+    hasil.style.display = "block";
+}
+
+function resetKuis() {
+    setTimeout(function() {
+        document.getElementById("hasilKuis").style.display = "none";
+    }, 0);
+}
+
+// Inisialisasi kalkulator
+ubahKalkulator();
+</script>
+
+</body>
+</html>
